@@ -1,9 +1,6 @@
-export default class Formatter {
-  // Force input type to be a string
-  static #forceToString( input ) {
-    return new String( input || "" ).toString();
-  }
+import { stringify } from "./utility.js";
 
+export default class Formatter {
   // Format IRC message object into a string
   static format( input ) {
     if ( !input || typeof input != "object" ) input = {};
@@ -18,7 +15,7 @@ export default class Formatter {
 
   // Format IRC command
   static command( input ) {
-    input = this.#forceToString( input || "" );
+    input = stringify( input || "" );
     return !input.includes( " " ) ? input.toUpperCase() : "";
   }
 
@@ -28,7 +25,7 @@ export default class Formatter {
     let leading = [];
     let trailing = [];
     input.forEach( param => {
-      param = this.#forceToString( param || "" );
+      param = stringify( param || "" );
       ( param.includes( " " ) ? trailing : leading ).push( param.replace( /^\:+/ , "" ) );
     } );
     leading = leading.join( " " );
@@ -40,9 +37,9 @@ export default class Formatter {
   static prefix( input ) {
     if ( !input || typeof input != "object" ) return "";
     let { nick , user , host } = input;
-    nick = this.#forceToString( nick || "" );
-    user = this.#forceToString( user || "" );
-    host = this.#forceToString( host || "" );
+    nick = stringify( nick || "" );
+    user = stringify( user || "" );
+    host = stringify( host || "" );
     let prefix = "";
     if ( nick && user && host ) prefix += `${ nick }!`;
     if ( user && host ) prefix += `${ user }@`;
@@ -55,7 +52,7 @@ export default class Formatter {
     if ( !input || typeof input != "object" ) return "";
     const tags = [];
     for ( let key in input ) {
-      let value = this.#forceToString( input[ key ] || "" );
+      let value = stringify( input[ key ] || "" );
       tags.push( `${ key }=${ value }` );
     }
     return tags.length ? `@${ tags.join( ";" ) }` : "" ;

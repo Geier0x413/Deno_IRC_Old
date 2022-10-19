@@ -1,12 +1,9 @@
-export default class User {
-  // Force input type to be a string
-  static #forceToString( input ) {
-    return new String( input || "" ).toString();
-  }
+import { stringify } from "./utility.js";
 
+export default class User {
   // Check if the user's name and prefix are formatted correctly
   static checkName( input ) {
-    input = this.#forceToString( input );
+    input = stringify( input );
     const prefixes = Array.from( this.prefixes );
     let user = new RegExp( `^(?<prefix>[\\${ prefixes.join( "\\" ) }])?(?<name>\\S+)$` , "i" ).exec( input );
     return user?.groups || {};

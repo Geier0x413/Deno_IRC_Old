@@ -1,12 +1,9 @@
-export default class Parser {
-  // Force input type to be a string
-  static #forceToString( input ) {
-    return new String( input || "" ).toString();
-  }
+import { stringify } from "./utility.js";
 
+export default class Parser {
   // Parse IRC message string into an object
   static parse( input ) {
-    input = this.#forceToString( input || "" );
+    input = stringify( input || "" );
     let msg = new RegExp( /^(?:(?<tags>\@\S+)\s+)?(?:(?<prefix>\:\S+)\s+)?(?:(?<command>\S+)\s+)(?<params>.+)(?:(?:\\r)?\\n)?$/igm ).exec( input );
     msg = msg?.groups;
     return {
@@ -19,13 +16,13 @@ export default class Parser {
 
   // Parse IRC command
   static command( input ) {
-    input = this.#forceToString( input || "" );
+    input = stringify( input || "" );
     return !input.includes( " " ) ? input.toUpperCase() : "";
   }
 
   // Parse IRC params
   static params( input ) {
-    input = this.#forceToString( input || "" );
+    input = stringify( input || "" );
     if ( !input ) return [];
     const crlf = "\r\n";
     if ( input.includes( crlf ) ) input = input.replace( crlf , "" );
@@ -40,7 +37,7 @@ export default class Parser {
 
   // Parse IRC prefix
   static prefix( input ) {
-    input = this.#forceToString( input || "" );
+    input = stringify( input || "" );
     if ( !input ) return {};
     let prefix = new RegExp( /^\:?(?:(?<nick>.+?)\!)?(?:(?<user>.+?)\@)?(?<host>.+)$/i ).exec( input );
     prefix = prefix?.groups;
@@ -53,7 +50,7 @@ export default class Parser {
 
   // Parse IRC tags
   static tags( input ) {
-    input = this.#forceToString( input || "" );
+    input = stringify( input || "" );
     if ( !input ) return {};
     const at = "@";
     input = input.startsWith( at ) ? input.replace( at , "" ) : input;

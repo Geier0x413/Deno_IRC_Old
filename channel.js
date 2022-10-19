@@ -1,12 +1,9 @@
-export default class Channel {
-  // Force input type to be a string
-  static #forceToString( input ) {
-    return new String( input || "" ).toString();
-  }
+import { stringify } from "./utility.js";
 
+export default class Channel {
   // Check if the channel name and prefix are formatted correctly
   static checkName( input ) {
-    input = this.#forceToString( input );
+    input = stringify( input );
     const prefixes = Array.from( this.prefixes );
     let channel = new RegExp( `^(?<prefix>[\\${ prefixes.join( "\\" ) }])?(?<name>[^\\s,\\,]+$)` , "i" ).exec( input );
     return channel?.groups || {};
