@@ -1,4 +1,3 @@
-import * as path from "https://deno.land/std@0.160.0/path/mod.ts";
 import { deepMerge } from "https://deno.land/std@0.160.0/collections/deep_merge.ts";
 
 export function mergeObjects(...args) {
@@ -6,7 +5,7 @@ export function mergeObjects(...args) {
 };
 
 // Return an object of IRC numerical replies
-export const numerical_replies = parseJSONFile( resolvePathToProject( "/assets/numerical_replies.json" ) );
+export const numerical_replies = parseJSONFile( import.meta.resolve( "./assets/numerical_replies.json" ) );
 
 // Parse JSON file and return an object
 export function parseJSONFile( file ) {
@@ -15,11 +14,6 @@ export function parseJSONFile( file ) {
   } catch( error ) {
     throw error;
   }
-}
-
-// Resolve the file to project directory and return the path
-export function resolvePathToProject( file ) {
-  return new URL( path.join( path.parse( Deno.mainModule ).dir , stringify( file ) ) );
 }
 
 // Force input type to be a string
