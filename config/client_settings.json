@@ -1,1 +1,32 @@
-{}
+{
+  "network": {
+    "buffer": {
+      "message_limit": 512,
+      "tag_limit": 8191
+    },
+    "connection": {
+      "attempts": 0,
+      "timeout": 0
+    },
+    "host": "127.0.0.1",
+    "port": 0,
+    "tls": {}
+  },
+  "registration": {
+    "nickname": "",
+    "password": "",
+    "realname": "",
+    "username": "Casper"
+  },
+  "require": {
+    "automatic": {
+      "connect": true,
+      "management": true,
+      "ping": true,
+      "reconnect": true,
+      "registration": true
+    },
+    "buffer_limit": true,
+    "encryption": false
+  }
+}
